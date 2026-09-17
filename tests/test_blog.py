@@ -96,6 +96,12 @@ class AboutViewTests(TestCase):
         )
         self.assertContains(response, "LinkedIn profile")
 
+    def test_about_page_renders_profile_image(self):
+        response = self.client.get(reverse("blog:about"))
+
+        self.assertContains(response, "/static/images/tangeni-shikomba-profile.jpg")
+        self.assertContains(response, 'alt="Portrait of Tangeni Shikomba"')
+
 
 class SeoPlumbingTests(TestCase):
     """Tests for robots.txt and the XML sitemap."""
