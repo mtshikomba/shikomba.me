@@ -86,6 +86,18 @@ class AboutViewTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
 
+    def test_about_page_renders_contact_links(self):
+        response = self.client.get(reverse("blog:about"))
+
+        self.assertContains(
+            response,
+            '<a href="mailto:tangenishikomba@gmail.com">Email Tangeni Shikomba</a>',
+        )
+        self.assertContains(
+            response,
+            '<a href="https://www.linkedin.com/in/tangeni-shikomba">LinkedIn profile</a>',
+        )
+
 
 class SeoPlumbingTests(TestCase):
     """Tests for robots.txt and the XML sitemap."""
