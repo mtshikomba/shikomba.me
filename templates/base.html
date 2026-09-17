@@ -15,6 +15,7 @@
             <a href="{% url 'blog:post-list' %}" {% if request.resolver_match.url_name == 'post-list' %}aria-current="page"{% endif %}>Blog</a>
             <a href="{% url 'projects:project-list' %}" {% if request.resolver_match.app_name == 'projects' %}aria-current="page"{% endif %}>Projects</a>
             <a href="{% url 'resume:resume-detail' %}" {% if request.resolver_match.app_name == 'resume' %}aria-current="page"{% endif %}>Resume</a>
+            <a href="{% url 'research:research-list' %}" {% if request.resolver_match.app_name == 'research' %}aria-current="page"{% endif %}>Research</a>
             <a href="{% url 'blog:about' %}" {% if request.resolver_match.url_name == 'about' %}aria-current="page"{% endif %}>About</a>
         </nav>
     </header>

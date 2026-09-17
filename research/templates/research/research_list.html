@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Research — shikomba.me{% endblock %}
+{% block meta_description %}Published research work by the owner of shikomba.me.{% endblock %}
+
+{% block content %}
+<h1>Research</h1>
+{% for research in research_entries %}
+<article class="card">
+    <h2>{{ research.title }}</h2>
+    <p class="card-meta">Published {{ research.publication_date|date:"F j, Y" }}</p>
+    <p>{{ research.summary }}</p>
+    <p><a href="{{ research.url }}">Read publication</a></p>
+</article>
+{% empty %}
+<p>No published research yet.</p>
+{% endfor %}
+{% endblock %}
