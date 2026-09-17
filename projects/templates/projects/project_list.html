@@ -4,13 +4,20 @@
 {% block meta_description %}Past and ongoing projects, including open-source work.{% endblock %}
 
 {% block content %}
-<h1>Projects</h1>
+<section class="page-intro">
+    <p class="eyebrow">Selected work</p>
+    <h1>Projects that move ideas forward.</h1>
+    <p>A selection of past and ongoing work across software, education, and open source.</p>
+</section>
 {% for project in projects %}
 <article class="card">
-    <h2>{{ project.title }}</h2>
+    <div class="card-topline">
+        <p class="card-kicker">{{ project.start_date|date:"Y"|default:"Selected work" }}</p>
+        {% if project.is_open_source %}<span class="open-source-badge">Open source</span>{% endif %}
+    </div>
+    <h2 class="card-title">{{ project.title }}</h2>
     <p class="card-meta">
         <span class="status-badge status-badge--{{ project.status }}">{{ project.get_status_display }}</span>
-        {% if project.is_open_source %}<span class="open-source-badge">Open source</span>{% endif %}
         {% if project.role %} &middot; {{ project.role }}{% endif %}
     </p>
     <p>{{ project.short_description }}</p>
@@ -27,6 +34,6 @@
     </p>
 </article>
 {% empty %}
-<p>No projects published yet.</p>
+<div class="empty-state"><p>No projects published yet.</p></div>
 {% endfor %}
 {% endblock %}

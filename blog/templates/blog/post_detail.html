@@ -4,9 +4,11 @@
 {% block meta_description %}{{ post.meta_description }}{% endblock %}
 
 {% block content %}
-<article class="card">
+<p><a class="back-link" href="{% url 'blog:post-list' %}"><span aria-hidden="true">←</span> Back to writing</a></p>
+<article class="reading-column">
+    <p class="eyebrow">Journal</p>
     <h1>{{ post.title }}</h1>
     <p class="card-meta">{{ post.publish_date|date:"F j, Y" }}</p>
-    <div>{{ post.body|linebreaks }}</div>
+    <div class="prose">{{ post.body|linebreaks }}</div>
 </article>
 {% endblock %}

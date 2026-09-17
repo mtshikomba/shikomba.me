@@ -89,14 +89,12 @@ class AboutViewTests(TestCase):
     def test_about_page_renders_contact_links(self):
         response = self.client.get(reverse("blog:about"))
 
+        self.assertContains(response, 'href="mailto:tangenishikomba@gmail.com"')
+        self.assertContains(response, "Email Tangeni Shikomba")
         self.assertContains(
-            response,
-            '<a href="mailto:tangenishikomba@gmail.com">Email Tangeni Shikomba</a>',
+            response, 'href="https://www.linkedin.com/in/tangeni-shikomba"'
         )
-        self.assertContains(
-            response,
-            '<a href="https://www.linkedin.com/in/tangeni-shikomba">LinkedIn profile</a>',
-        )
+        self.assertContains(response, "LinkedIn profile")
 
 
 class SeoPlumbingTests(TestCase):

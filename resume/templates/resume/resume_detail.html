@@ -4,9 +4,15 @@
 {% block meta_description %}Experience, education, and skills.{% endblock %}
 
 {% block content %}
-<h1>Resume</h1>
+<section class="page-intro page-intro--split">
+    <div>
+        <p class="eyebrow">Experience &amp; focus</p>
+        <h1>A practical record of building and learning.</h1>
+    </div>
+    <p>Software engineering, research, and the work between them.</p>
+</section>
 {% if resume %}
-<p><a class="resume-download" href="{% url 'resume:resume-download' %}">Download resume (PDF)</a></p>
+<p><a class="button button--primary" href="{% url 'resume:resume-download' %}">Download resume <span aria-hidden="true">↓</span></a></p>
 <section class="resume-section">
     <h2>Experience</h2>
     <div>{{ resume.experience|linebreaks }}</div>
@@ -20,6 +26,6 @@
     <div>{{ resume.skills|linebreaks }}</div>
 </section>
 {% else %}
-<p>Resume content is coming soon.</p>
+<div class="empty-state"><p>Resume content is coming soon.</p></div>
 {% endif %}
 {% endblock %}
