@@ -102,6 +102,16 @@ class AboutViewTests(TestCase):
         self.assertContains(response, "/static/images/tangeni-shikomba-profile.jpg")
         self.assertContains(response, 'alt="Portrait of Tangeni Shikomba"')
 
+    def test_public_shell_renders_brand_image_and_footer_links(self):
+        response = self.client.get(reverse("blog:about"))
+
+        self.assertContains(response, "/static/images/tangeni-shikomba-brand.jpg")
+        self.assertContains(response, 'alt=""')
+        self.assertContains(response, 'href="mailto:tangenishikomba@gmail.com"')
+        self.assertContains(
+            response, 'href="https://www.linkedin.com/in/tangeni-shikomba"'
+        )
+
 
 class SeoPlumbingTests(TestCase):
     """Tests for robots.txt and the XML sitemap."""
