@@ -42,6 +42,18 @@ class ResumeDetailViewTests(TestCase):
         self.assertContains(response, "Worked on things.")
         self.assertContains(response, "Python, Django")
 
+    def test_resume_download_uses_dedicated_spacing_wrapper(self):
+        Resume.objects.create(
+            file=SimpleUploadedFile(
+                "resume.pdf", PDF_CONTENT, content_type="application/pdf"
+            ),
+        )
+
+        response = self.client.get(reverse("resume:resume-detail"))
+
+        self.assertContains(response, 'class="resume-download"')
+        self.assertContains(response, 'href="/resume/download/"')
+
 
 class ResumeDownloadViewTests(TestCase):
     """Tests for the resume PDF download route."""
