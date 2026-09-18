@@ -97,6 +97,21 @@ class AboutViewTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
 
+    def test_about_page_renders_approved_bio(self):
+        response = self.client.get(reverse("blog:about"))
+
+        self.assertContains(
+            response,
+            "Matheus Tangeni Shikomba is a Full-Stack Software Engineer and Scrum "
+            "Master at Logic Solutions Inc., where he leads agile development teams "
+            "and builds scalable enterprise applications. His expertise includes "
+            "Python for data science, Django, PHP, Symfony, Laravel, Vue.js, Angular, "
+            "RESTful APIs, AI, database optimization, and cloud infrastructure. He "
+            "is also a published ACM Natural Language Processing researcher. Matheus "
+            "holds an MS in Computer Science from Eastern Michigan University and a "
+            "BS in Computer Science with Honors from the University of Namibia.",
+        )
+
     def test_about_page_renders_contact_links(self):
         response = self.client.get(reverse("blog:about"))
 
