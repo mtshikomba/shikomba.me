@@ -6,18 +6,24 @@
 {% block content %}
 <h1>Projects</h1>
 {% for project in projects %}
-<article>
-    <h2>{{ project.title }}{% if project.is_open_source %} <span title="Open source">(open source)</span>{% endif %}</h2>
-    <p>{{ project.get_status_display }}{% if project.role %} &middot; {{ project.role }}{% endif %}</p>
+<article class="card">
+    <h2>{{ project.title }}</h2>
+    <p class="card-meta">
+        <span class="status-badge status-badge--{{ project.status }}">{{ project.get_status_display }}</span>
+        {% if project.is_open_source %}<span class="open-source-badge">Open source</span>{% endif %}
+        {% if project.role %} &middot; {{ project.role }}{% endif %}
+    </p>
     <p>{{ project.short_description }}</p>
     {% with tags=project.tag_list %}
     {% if tags %}
-    <p>{% for tag in tags %}<span>{{ tag }}</span>{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+    <ul class="tag-list">
+        {% for tag in tags %}<li>{{ tag }}</li>{% endfor %}
+    </ul>
     {% endif %}
     {% endwith %}
-    <p>
+    <p class="project-links">
         {% if project.is_open_source and project.source_url %}<a href="{{ project.source_url }}">Source code</a>{% endif %}
-        {% if project.demo_url %} <a href="{{ project.demo_url }}">Live demo</a>{% endif %}
+        {% if project.demo_url %}<a href="{{ project.demo_url }}">Live demo</a>{% endif %}
     </p>
 </article>
 {% empty %}

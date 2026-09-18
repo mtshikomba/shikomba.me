@@ -4,9 +4,9 @@
 {% block meta_description %}{{ post.meta_description }}{% endblock %}
 
 {% block content %}
-<article>
+<article class="card">
     <h1>{{ post.title }}</h1>
-    <p>{{ post.publish_date|date:"F j, Y" }}</p>
+    <p class="card-meta">{{ post.publish_date|date:"F j, Y" }}</p>
     <div>{{ post.body|linebreaks }}</div>
 </article>
 {% endblock %}

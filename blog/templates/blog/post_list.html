@@ -3,14 +3,14 @@
 {% block title %}shikomba.me{% endblock %}
 
 {% block content %}
-<section aria-label="Introduction">
+<section class="intro" aria-label="Introduction">
     <p>Hi, I'm the owner of shikomba.me — I write here about the things I'm building, and you can browse my <a href="{% url 'projects:project-list' %}">projects</a> or check out my <a href="{% url 'resume:resume-detail' %}">resume</a>.</p>
 </section>
 <h1>Posts</h1>
 {% for post in posts %}
-<article>
+<article class="card">
     <h2><a href="{% url 'blog:post-detail' slug=post.slug %}">{{ post.title }}</a></h2>
-    <p>{{ post.publish_date|date:"F j, Y" }}</p>
+    <p class="card-meta">{{ post.publish_date|date:"F j, Y" }}</p>
     <p>{{ post.meta_description }}</p>
 </article>
 {% empty %}
