@@ -90,27 +90,38 @@ class AboutViewTests(TestCase):
         response = self.client.get(reverse("blog:about"))
 
         self.assertContains(response, 'href="mailto:tangenishikomba@gmail.com"')
-        self.assertContains(response, "Email Tangeni Shikomba")
+        self.assertContains(response, "Email Matheus T. Shikomba")
         self.assertContains(
             response, 'href="https://www.linkedin.com/in/tangeni-shikomba"'
         )
         self.assertContains(response, "LinkedIn profile")
+        self.assertContains(response, 'href="https://github.com/mtshikomba"')
+        self.assertContains(response, "GitHub profile")
 
     def test_about_page_renders_profile_image(self):
         response = self.client.get(reverse("blog:about"))
 
         self.assertContains(response, "/static/images/tangeni-shikomba-profile.jpg")
-        self.assertContains(response, 'alt="Portrait of Tangeni Shikomba"')
+        self.assertContains(response, 'alt="Portrait of Matheus T. Shikomba"')
 
     def test_public_shell_renders_brand_image_and_footer_links(self):
         response = self.client.get(reverse("blog:about"))
 
         self.assertContains(response, "/static/images/tangeni-shikomba-brand.jpg")
+        self.assertEqual(
+            response.content.count(b"tangeni-shikomba-brand.jpg"),
+            1,
+        )
         self.assertContains(response, 'alt=""')
+        self.assertContains(response, "Matheus T. Shikomba")
+        self.assertContains(response, 'class="site-footer__copy"')
+        self.assertContains(response, 'class="site-footer__links"')
+        self.assertContains(response, 'href="https://github.com/mtshikomba"')
         self.assertContains(response, 'href="mailto:tangenishikomba@gmail.com"')
         self.assertContains(
             response, 'href="https://www.linkedin.com/in/tangeni-shikomba"'
         )
+        self.assertNotContains(response, ">shikomba<span")
 
 
 class SeoPlumbingTests(TestCase):
