@@ -10,7 +10,7 @@
     <p>Software engineering, research, and the work between them.</p>
 </section>
 {% if resume %}
-<p><a class="button button--primary" href="{% url 'resume:resume-download' %}">Download resume <span aria-hidden="true">↓</span></a></p>
+<p class="resume-download"><a class="button button--primary" href="{% url 'resume:resume-download' %}">Download resume <span aria-hidden="true">↓</span></a></p>
 <section class="resume-section">
     <h2>Experience</h2>
     <div>{{ resume.experience|linebreaks }}</div>
