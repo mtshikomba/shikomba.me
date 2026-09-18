@@ -32,6 +32,8 @@ class PostListViewTests(TestCase):
         ).read_text()
 
         self.assertIn(".hero {", stylesheet)
+        self.assertIn(".hero__lede", stylesheet)
+        self.assertIn("font-size: 1.1rem;", stylesheet)
         self.assertNotIn(".hero::after", stylesheet)
 
     def test_only_published_posts_are_listed(self):

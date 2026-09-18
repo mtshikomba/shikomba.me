@@ -174,7 +174,7 @@ p { max-width: 65ch; }
     max-width: 45rem;
     margin-bottom: 2rem;
     color: var(--muted);
-    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    font-size: 1.1rem;
 }
 
 .hero__actions, .contact-links {
@@ -222,16 +222,7 @@ p { max-width: 65ch; }
 }
 
 .page-intro h1 { margin-bottom: 1rem; }
-.page-intro > p:last-child, .page-intro--split > p { max-width: 42rem; color: var(--muted); font-size: 1.1rem; }
-
-.page-intro--split {
-    display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(12rem, 0.8fr);
-    gap: 2rem;
-    align-items: end;
-}
-
-.page-intro--split > p { margin-bottom: 0.4rem; }
+.page-intro > p:last-child { max-width: 42rem; color: var(--muted); font-size: 1.1rem; }
 
 .about-layout {
     display: grid;
@@ -336,9 +327,6 @@ a.card-title:hover, a.card-title:focus { color: var(--brand-dark); }
     .site-nav { justify-content: flex-start; gap: 0.75rem 1rem; }
     .container { padding: 3rem 0 4rem; }
     .hero { margin-bottom: 3.5rem; padding-top: 1rem; }
-    .page-intro--split { display: block; }
-    .page-intro--split > p { margin-top: 1rem; }
-
     .about-layout {
         display: block;
     }
