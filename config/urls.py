@@ -22,6 +22,7 @@ urlpatterns = [
     ),
     path("projects/", include("projects.urls")),
     path("resume/", include("resume.urls")),
+    path("research/", include("research.urls")),
     path("", include("blog.urls")),
 ]
 

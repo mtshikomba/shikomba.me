@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Research — shikomba.me{% endblock %}
+{% block meta_description %}Published research work by the owner of shikomba.me.{% endblock %}
+
+{% block content %}
+<section class="page-intro">
+    <p class="eyebrow">Questions worth pursuing</p>
+    <h1>Research and investigation.</h1>
+    <p>Published work, technical explorations, and ideas shaped through careful inquiry.</p>
+</section>
+{% for research in research_entries %}
+<article class="card">
+    <p class="card-kicker">{{ research.publication_date|date:"Y" }}</p>
+    <h2 class="card-title">{{ research.title }}</h2>
+    <p class="card-meta">Published {{ research.publication_date|date:"F j, Y" }}</p>
+    <p>{{ research.summary }}</p>
+    <p><a class="text-link" href="{{ research.url }}">Read publication <span aria-hidden="true">↗</span></a></p>
+</article>
+{% empty %}
+<div class="empty-state"><p>No published research yet.</p></div>
+{% endfor %}
+{% endblock %}

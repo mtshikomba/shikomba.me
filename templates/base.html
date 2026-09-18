@@ -11,18 +11,32 @@
 <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
     <header class="site-header">
-        <nav class="site-nav" aria-label="Primary">
+        <div class="site-header__inner">
+            <a class="site-brand" href="{% url 'blog:post-list' %}" aria-label="shikomba.me home">
+                <img class="site-brand__mark" src="{% static 'images/tangeni-shikomba-brand.jpg' %}" alt="" width="40" height="40">
+            </a>
+            <nav class="site-nav" aria-label="Primary">
             <a href="{% url 'blog:post-list' %}" {% if request.resolver_match.url_name == 'post-list' %}aria-current="page"{% endif %}>Blog</a>
             <a href="{% url 'projects:project-list' %}" {% if request.resolver_match.app_name == 'projects' %}aria-current="page"{% endif %}>Projects</a>
             <a href="{% url 'resume:resume-detail' %}" {% if request.resolver_match.app_name == 'resume' %}aria-current="page"{% endif %}>Resume</a>
+            <a href="{% url 'research:research-list' %}" {% if request.resolver_match.app_name == 'research' %}aria-current="page"{% endif %}>Research</a>
             <a href="{% url 'blog:about' %}" {% if request.resolver_match.url_name == 'about' %}aria-current="page"{% endif %}>About</a>
-        </nav>
+            </nav>
+        </div>
     </header>
     <main id="main-content" class="container">
         {% block content %}{% endblock %}
     </main>
     <footer class="site-footer">
-        <p>&copy; {% now "Y" %} shikomba.me</p>
+        <div class="site-footer__inner">
+            <p class="site-footer__copy">&copy; {% now "Y" %} Matheus T. Shikomba</p>
+            <nav class="site-footer__links" aria-label="Footer">
+                <a href="{% url 'blog:about' %}">About</a>
+                <a href="mailto:tangenishikomba@gmail.com">Email</a>
+                <a href="https://www.linkedin.com/in/tangeni-shikomba">LinkedIn</a>
+                <a href="https://github.com/mtshikomba">GitHub profile</a>
+            </nav>
+        </div>
     </footer>
 </body>
 </html>
