@@ -1,6 +1,7 @@
 """Tests for the blog app: post visibility, routing, about page, and SEO plumbing."""
 
 from datetime import timedelta
+from pathlib import Path
 
 from django.test import TestCase
 from django.urls import reverse
@@ -24,6 +25,16 @@ def make_post(**overrides) -> Post:
 
 class PostListViewTests(TestCase):
     """Tests for the public post list view."""
+
+    def test_blog_stylesheet_has_no_decorative_hero_circle(self):
+        stylesheet = (
+            Path(__file__).resolve().parents[1] / "static" / "css" / "site.css"
+        ).read_text()
+
+        self.assertIn(".hero {", stylesheet)
+        self.assertIn(".hero__lede", stylesheet)
+        self.assertIn("font-size: 1.1rem;", stylesheet)
+        self.assertNotIn(".hero::after", stylesheet)
 
     def test_only_published_posts_are_listed(self):
         make_post(title="Published", slug="published", status=Post.Status.PUBLISHED)
@@ -90,17 +101,38 @@ class AboutViewTests(TestCase):
         response = self.client.get(reverse("blog:about"))
 
         self.assertContains(response, 'href="mailto:tangenishikomba@gmail.com"')
-        self.assertContains(response, "Email Tangeni Shikomba")
+        self.assertContains(response, "Email Matheus T. Shikomba")
         self.assertContains(
             response, 'href="https://www.linkedin.com/in/tangeni-shikomba"'
         )
         self.assertContains(response, "LinkedIn profile")
+        self.assertContains(response, 'href="https://github.com/mtshikomba"')
+        self.assertContains(response, "GitHub profile")
 
     def test_about_page_renders_profile_image(self):
         response = self.client.get(reverse("blog:about"))
 
         self.assertContains(response, "/static/images/tangeni-shikomba-profile.jpg")
-        self.assertContains(response, 'alt="Portrait of Tangeni Shikomba"')
+        self.assertContains(response, 'alt="Portrait of Matheus T. Shikomba"')
+
+    def test_public_shell_renders_brand_image_and_footer_links(self):
+        response = self.client.get(reverse("blog:about"))
+
+        self.assertContains(response, "/static/images/tangeni-shikomba-brand.jpg")
+        self.assertEqual(
+            response.content.count(b"tangeni-shikomba-brand.jpg"),
+            1,
+        )
+        self.assertContains(response, 'alt=""')
+        self.assertContains(response, "Matheus T. Shikomba")
+        self.assertContains(response, 'class="site-footer__copy"')
+        self.assertContains(response, 'class="site-footer__links"')
+        self.assertContains(response, 'href="https://github.com/mtshikomba"')
+        self.assertContains(response, 'href="mailto:tangenishikomba@gmail.com"')
+        self.assertContains(
+            response, 'href="https://www.linkedin.com/in/tangeni-shikomba"'
+        )
+        self.assertNotContains(response, ">shikomba<span")
 
 
 class SeoPlumbingTests(TestCase):

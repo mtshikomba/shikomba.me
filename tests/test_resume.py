@@ -21,6 +21,12 @@ class ResumeDetailViewTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
 
+    def test_resume_intro_uses_shared_page_intro_structure(self):
+        response = self.client.get(reverse("resume:resume-detail"))
+
+        self.assertContains(response, 'class="page-intro"')
+        self.assertNotContains(response, "page-intro--split")
+
     def test_resume_page_renders_content(self):
         Resume.objects.create(
             experience="Worked on things.",
