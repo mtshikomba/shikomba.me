@@ -97,6 +97,25 @@ class AboutViewTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
 
+    def test_public_shell_uses_current_identity_and_favicon(self):
+        response = self.client.get(reverse("blog:post-list"))
+
+        self.assertContains(
+            response,
+            '<link rel="icon" type="image/jpeg" href="/static/images/tangeni-shikomba-brand.jpg">',
+            html=True,
+        )
+        self.assertContains(response, "Matheus T. Shikomba")
+        self.assertNotContains(response, "Tangeni Shikomba")
+
+    def test_about_page_uses_accessible_contact_icons(self):
+        response = self.client.get(reverse("blog:about"))
+
+        self.assertContains(response, 'aria-label="Email Matheus T. Shikomba"')
+        self.assertContains(response, 'aria-label="LinkedIn profile"')
+        self.assertContains(response, 'aria-label="GitHub profile"')
+        self.assertContains(response, 'class="contact-icon"')
+
     def test_about_page_renders_approved_bio(self):
         response = self.client.get(reverse("blog:about"))
 
@@ -136,18 +155,22 @@ class AboutViewTests(TestCase):
         self.assertContains(response, "/static/images/tangeni-shikomba-brand.jpg")
         self.assertEqual(
             response.content.count(b"tangeni-shikomba-brand.jpg"),
-            1,
+            2,
         )
         self.assertContains(response, 'alt=""')
         self.assertContains(response, "Matheus T. Shikomba")
         self.assertContains(response, 'class="site-footer__copy"')
-        self.assertContains(response, 'class="site-footer__links"')
+        self.assertContains(response, 'class="contact-icons"')
         self.assertContains(response, 'href="https://github.com/mtshikomba"')
         self.assertContains(response, 'href="mailto:tangenishikomba@gmail.com"')
         self.assertContains(
             response, 'href="https://www.linkedin.com/in/tangeni-shikomba"'
         )
         self.assertNotContains(response, ">shikomba<span")
+        footer_html = (
+            response.content.decode().split("<footer", 1)[1].split("</footer>", 1)[0]
+        )
+        self.assertNotIn('href="/about/"', footer_html)
 
 
 class SeoPlumbingTests(TestCase):

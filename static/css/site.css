@@ -311,11 +311,24 @@ a.card-title:hover, a.card-title:focus { color: var(--brand-dark); }
 .resume-section { padding: 1.5rem 0; border-top: 1px solid var(--line); }
 .resume-section + .resume-section { margin-top: 0; }
 .contact-card { max-width: 42rem; }
+.contact-icons { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0 0; }
+.contact-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    color: var(--brand-dark);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    text-decoration: none;
+}
+.contact-icon:hover, .contact-icon:focus-visible { color: var(--brand); border-color: var(--brand); }
+.contact-icon svg { width: 1.35rem; height: 1.35rem; }
 
 .site-footer { padding: 2.5rem 0; color: var(--muted); border-top: 1px solid var(--line); }
 .site-footer__inner { display: flex; justify-content: space-between; gap: 2rem; align-items: center; }
 .site-footer__copy { margin: 0; color: var(--muted); font-size: 0.85rem; text-align: left; }
-.site-footer__links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 1rem; }
 
 @keyframes rise-in {
     from { opacity: 0; transform: translateY(8px); }
@@ -337,7 +350,7 @@ a.card-title:hover, a.card-title:focus { color: var(--brand-dark); }
     }
 
     .site-footer__inner { display: flex; align-items: stretch; flex-direction: column; gap: 1rem; }
-    .site-footer__links { justify-content: flex-end; order: 1; }
+    .contact-icons { justify-content: flex-end; order: 1; }
     .site-footer__copy { order: 2; }
 }
 
