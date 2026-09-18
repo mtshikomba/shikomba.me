@@ -83,18 +83,16 @@ a:focus-visible, button:focus-visible, input:focus-visible {
     text-decoration: none;
 }
 
-.site-brand:hover, .site-brand:focus { color: var(--ink); }
+.site-brand:hover, .site-brand:focus,
+.site-footer__brand:hover, .site-footer__brand:focus { color: var(--ink); }
 
 .site-brand__mark {
-    display: grid;
-    width: 2rem;
-    height: 2rem;
-    place-items: center;
-    color: var(--surface);
-    background: var(--brand);
+    display: block;
+    width: 2.5rem;
+    height: 2.5rem;
+    flex-shrink: 0;
     border-radius: 50%;
-    font-family: -apple-system, "Segoe UI", sans-serif;
-    font-size: 0.95rem;
+    object-fit: contain;
 }
 
 .site-brand__dot { color: var(--brand); }
@@ -170,25 +168,13 @@ p { max-width: 65ch; }
     padding: 3rem 0 0;
 }
 
-.hero::after {
-    position: absolute;
-    right: 4%;
-    bottom: 0;
-    width: 7rem;
-    height: 7rem;
-    border: 1px solid var(--line);
-    border-radius: 50%;
-    content: "";
-    opacity: 0.7;
-}
-
 .hero h1 { position: relative; z-index: 1; margin-bottom: 1.5rem; }
 
 .hero__lede {
     max-width: 45rem;
     margin-bottom: 2rem;
     color: var(--muted);
-    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    font-size: 1.1rem;
 }
 
 .hero__actions, .contact-links {
@@ -236,16 +222,32 @@ p { max-width: 65ch; }
 }
 
 .page-intro h1 { margin-bottom: 1rem; }
-.page-intro > p:last-child, .page-intro--split > p { max-width: 42rem; color: var(--muted); font-size: 1.1rem; }
+.page-intro > p:last-child { max-width: 42rem; color: var(--muted); font-size: 1.1rem; }
 
-.page-intro--split {
+.about-layout {
     display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(12rem, 0.8fr);
-    gap: 2rem;
-    align-items: end;
+    grid-template-columns: minmax(13rem, 0.72fr) minmax(0, 1.28fr);
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: start;
 }
 
-.page-intro--split > p { margin-bottom: 0.4rem; }
+.profile-portrait {
+    width: 100%;
+    max-width: 22rem;
+    margin: 0;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    box-shadow: var(--shadow);
+}
+
+.profile-portrait img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
 
 .card {
     position: relative;
@@ -311,26 +313,32 @@ a.card-title:hover, a.card-title:focus { color: var(--brand-dark); }
 .contact-card { max-width: 42rem; }
 
 .site-footer { padding: 2.5rem 0; color: var(--muted); border-top: 1px solid var(--line); }
-.site-footer__inner { display: grid; grid-template-columns: 1fr auto; gap: 0.75rem 2rem; align-items: center; }
-.site-footer__brand, .site-footer__copy { margin: 0; }
-.site-footer__brand { color: var(--ink); font-family: Georgia, "Times New Roman", serif; font-weight: 700; }
-.site-footer__links { display: flex; flex-wrap: wrap; gap: 1rem; }
-.site-footer__copy { grid-column: 1 / -1; font-size: 0.85rem; }
+.site-footer__inner { display: flex; justify-content: space-between; gap: 2rem; align-items: center; }
+.site-footer__copy { margin: 0; color: var(--muted); font-size: 0.85rem; text-align: left; }
+.site-footer__links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 1rem; }
 
 @keyframes rise-in {
     from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-@media (max-width: 680px) {
+@media (max-width: 760px) {
     .site-header__inner { align-items: flex-start; flex-direction: column; gap: 0.75rem; padding: 1rem 0; }
     .site-nav { justify-content: flex-start; gap: 0.75rem 1rem; }
     .container { padding: 3rem 0 4rem; }
     .hero { margin-bottom: 3.5rem; padding-top: 1rem; }
-    .page-intro--split { display: block; }
-    .page-intro--split > p { margin-top: 1rem; }
-    .site-footer__inner { display: block; }
-    .site-footer__links { margin: 1rem 0; }
+    .about-layout {
+        display: block;
+    }
+
+    .profile-portrait {
+        max-width: 18rem;
+        margin: 0 auto 2.5rem;
+    }
+
+    .site-footer__inner { display: flex; align-items: stretch; flex-direction: column; gap: 1rem; }
+    .site-footer__links { justify-content: flex-end; order: 1; }
+    .site-footer__copy { order: 2; }
 }
 
 @media (prefers-reduced-motion: reduce) {
