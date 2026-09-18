@@ -1,6 +1,7 @@
 """Tests for the blog app: post visibility, routing, about page, and SEO plumbing."""
 
 from datetime import timedelta
+from pathlib import Path
 
 from django.test import TestCase
 from django.urls import reverse
@@ -24,6 +25,14 @@ def make_post(**overrides) -> Post:
 
 class PostListViewTests(TestCase):
     """Tests for the public post list view."""
+
+    def test_blog_stylesheet_has_no_decorative_hero_circle(self):
+        stylesheet = (
+            Path(__file__).resolve().parents[1] / "static" / "css" / "site.css"
+        ).read_text()
+
+        self.assertIn(".hero {", stylesheet)
+        self.assertNotIn(".hero::after", stylesheet)
 
     def test_only_published_posts_are_listed(self):
         make_post(title="Published", slug="published", status=Post.Status.PUBLISHED)
