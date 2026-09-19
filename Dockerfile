@@ -20,7 +20,7 @@ EXPOSE 8000
 
 # Interim target until task-038 adds a dedicated health endpoint; update together.
 HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
-    CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/')" || exit 1
+    CMD python -c "import http.client; connection = http.client.HTTPConnection('127.0.0.1', 8000, timeout=2); connection.request('GET', '/'); status = connection.getresponse().status; raise SystemExit(status >= 500)" || exit 1
 
 ENTRYPOINT ["./entrypoint.sh"]
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "config.wsgi:application"]

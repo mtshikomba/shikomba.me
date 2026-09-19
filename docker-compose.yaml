@@ -1,0 +1,56 @@
+services:
+  web:
+    build: .
+    container_name: shikomba-web
+    restart: unless-stopped
+    env_file:
+      - .env.production
+    depends_on:
+      db:
+        condition: service_healthy
+      volumes-init:
+        condition: service_completed_successfully
+    volumes:
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+    networks:
+      - app-network
+      - proxy-tier
+
+  volumes-init:
+    image: alpine:3.20
+    restart: "no"
+    command: >-
+      sh -c "chown -R 1000:1000 /app/staticfiles /app/media"
+    volumes:
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    env_file:
+      - .env.production
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u root -p\"$${MYSQL_ROOT_PASSWORD}\" --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - app-network
+
+volumes:
+  static_volume:
+  media_volume:
+  mysql_data:
+
+networks:
+  app-network:
+    internal: true
+  proxy-tier:
+    name: proxy-tier
+    external: true
