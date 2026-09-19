@@ -3,7 +3,10 @@
 import os
 from pathlib import Path
 
+import pymysql
 from dotenv import load_dotenv
+
+pymysql.install_as_MySQLdb()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -72,12 +75,27 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+if os.environ.get("DB_HOST"):
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.mysql",
+            "NAME": os.environ.get("DB_NAME", "shikomba"),
+            "USER": os.environ.get("DB_USER", "shikomba"),
+            "PASSWORD": os.environ.get(
+                "DB_PASSWORD", os.environ.get("MYSQL_PASSWORD", "")
+            ),
+            "HOST": os.environ["DB_HOST"],
+            "PORT": os.environ.get("DB_PORT", "3306"),
+            "CONN_MAX_AGE": int(os.environ.get("DB_CONN_MAX_AGE", "60")),
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -104,6 +122,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Production hardening; disabled automatically when DEBUG is True for local dev.
 SECURE_SSL_REDIRECT = not DEBUG
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SESSION_COOKIE_SECURE = not DEBUG
 CSRF_COOKIE_SECURE = not DEBUG
 SECURE_HSTS_SECONDS = 0 if DEBUG else 31536000
